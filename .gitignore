@@ -1,2 +1,3 @@
 venv/
 __pycache__/
+data/processed/world_cup_events_master.csv
