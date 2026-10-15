@@ -24,7 +24,10 @@ st.markdown("""
 st.title("⚽ Football Recruitment Dashboard")
 st.caption("World Cup 2026 | Shot Location Analysis")
 
-DATA_PATH = Path("data/processed/world_cup_events_master.csv")
+DATA_URL = ("https://huggingface.co/datasets/"
+            "ehxnbuilds/world-cup-2026-events/"
+            "resolve/main/world_cup_events_master.csv"
+)
 
 # ---------- LOAD AND PREPARE DATA ----------
 @st.cache_data
@@ -72,12 +75,8 @@ def load_shots(path):
     return shots
 
 
-if not DATA_PATH.exists():
-    st.error(f"Dataset not found: {DATA_PATH}")
-    st.stop()
-
-with st.spinner("Loading shot data..."):
-    shots = load_shots(str(DATA_PATH))
+with st.spinner("Downloading and loading World Cup shot data"):
+    shots = load_shots(DATA_URL)
 
 # Keep all records in memory, but exclude own goals from this analysis.
 analysis_shots = shots[~shots["is_own_goal"]].copy()
